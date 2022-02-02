@@ -53,9 +53,58 @@
                 <li><a href="#">English</a></li>
             </ul>
         </div>
-        <div class="header__top__right__auth">
-            <a href="#"><i class="fa fa-user"></i> Login</a>
-        </div>
+
+        @if(Route::has('login'))
+
+            @auth
+                @if(Auth::user()->utype === 'ADM')
+                    //Admin
+                    <ul>
+                        <li class="menu-item menu-item-has-children parent">
+                            <a title="My Account" href="#">My Account ({{Auth::user()->name}})</a>
+                        </li>
+                        <li class="menu-item menu-item-has-children parent">
+                            <a title="Dashboard" href="{{route('admin.dashboard')}}">Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                        </li>
+                        <form id="logout-form" method="POST" action="{{route('logout')}}">
+                            @csrf
+
+                        </form>
+                    </ul>
+
+                @else
+                    //
+                    <ul>
+                        <li class="menu-item menu-item-has-children parent">
+                            <a title="My Account" href="#">My Account ({{Auth::user()->name}})</a>
+                        </li>
+                        <ul>
+                        <li class="menu-item">
+                            <a title="Dashboard" href="{{route('user.dashboard')}}">Dashboard</a>
+                        </li>
+                            <li>
+                                <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                            </li>
+                            <form id="logout-form" method="POST" action="{{route('logout')}}">
+                                @csrf
+
+                            </form>
+                        </ul>
+                    </ul>
+                @endif
+            @else
+                <div class="header__top__right__auth">
+                    <a href="{{route('login')}}"><i class="fa fa-user"></i> Login</a>
+                </div>
+                <div class="header__top__right__auth">
+                    <a href="{{route('register')}}"><i class="fa fa-user"></i> Register</a>
+                </div>
+            @endif
+
+        @endif
     </div>
     <nav class="humberger__menu__nav mobile-menu">
         <ul>
@@ -108,9 +157,55 @@
                                 <li><a href="#">English</a></li>
                             </ul>
                         </div>
-                        <div class="header__top__right__auth">
-                            <a href="#"><i class="fa fa-user"></i> Login</a>
-                        </div>
+                        <ul class="submenu">
+                        @if(Route::has('login'))
+
+                            @auth
+                                @if(Auth::user()->utype === 'ADM')
+
+                                        <li>
+                                            <a title="My Account" href="#">My Account ({{Auth::user()->name}})</a>
+                                        </li>
+                                        <li>
+                                            <a title="Dashboard" href="{{route('admin.dashboard')}}">Dashboard</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                        </li>
+                                    <form id="logout-form" method="POST" action="{{route('logout')}}">
+                                        @csrf
+
+                                    </form>
+                                    </ul>
+                                @else
+                                    <ul>
+                                        <li>
+                                            <a title="My Account" href="#">My Account ({{Auth::user()->name}})</a>
+                                        </li>
+                                        <ul>
+                                        <li>
+                                            <a title="Dashboard" href="{{route('user.dashboard')}}">Dashboard</a>
+                                        </li>
+                                            <li>
+                                                <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                            </li>
+                                            <form id="logout-form" method="POST" action="{{route('logout')}}">
+                                                @csrf
+
+                                            </form>
+                                        </ul>
+                                    </ul>
+                                @endif
+                            @else
+                                <div class="header__top__right__auth">
+                                    <a href="{{route('login')}}"><i class="fa fa-user"></i> Login</a>
+                                </div>
+                                <div class="header__top__right__auth">
+                                    <a href="{{route('register')}}"><i class="fa fa-user"></i> Register</a>
+                                </div>
+                            @endif
+
+                            @endif
                     </div>
                 </div>
             </div>
