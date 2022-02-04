@@ -24,7 +24,7 @@ use App\Http\Livewire\Admin\AdminDashboardComponent;
 
 Route::get('/',HomeComponent::class);
 Route::get('/shop',ShopComponent::class);
-Route::get('/cart',CartComponent::class);
+Route::get('/cart',CartComponent::class)->name('product.cart');
 Route::get('/contact',ContactComponents::class);
 Route::get('/product/{slug}',\App\Http\Livewire\DetailsComponent::class)->name('product.details');
 

@@ -39,7 +39,7 @@
                             <i class="fa fa-phone"></i>
                         </div>
                         <div class="hero__search__phone__text">
-                            <h5>+65 11.188.888</h5>
+                            <h5>+92 304 4485864</h5>
                             <span>support 24/7 time</span>
                         </div>
                     </div>
@@ -389,8 +389,8 @@
                                 <ul class="product__item__pic__hover">
                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
+                                    <li><a href="#" wire:click.prevent="store({{$product->id}},'{{$product->name}}',{{$product->regular_price}})"><i class="fa fa-shopping-cart"></i></a></li>
+                                  </ul>
                             </div>
                             <div class="product__item__text">
                                 <h6><a href="{{route('product.details',['slug'=>$product->slug])}}">{{$product->name}}</a></h6>

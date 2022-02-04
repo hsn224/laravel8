@@ -39,7 +39,7 @@
                             <i class="fa fa-phone"></i>
                         </div>
                         <div class="hero__search__phone__text">
-                            <h5>+65 11.188.888</h5>
+                            <h5>+92-304-4485864</h5>
                             <span>support 24/7 time</span>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                 <div class="breadcrumb__text">
                     <h2>Shopping Cart</h2>
                     <div class="breadcrumb__option">
-                        <a href="./index.html">Home</a>
+                        <a href="/">Home</a>
                         <span>Shopping Cart</span>
                     </div>
                 </div>
@@ -77,6 +77,12 @@
                     <table>
                         <thead>
                         <tr>
+                            @if(Session::has('success message'))
+                                <div class="alert alert-success">
+                                    <strong>Success</strong>{{Session::get('success message')}}
+                                </div>
+                            @endif
+                            @if(Cart::count()>0)
                             <th class="shoping__product">Products</th>
                             <th>Price</th>
                             <th>Quantity</th>
@@ -86,71 +92,32 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td class="shoping__cart__item">
-                                <img src="{{asset('img/cart/cart-1.jpg')}}" alt="">
-                                <h5>Vegetable’s Package</h5>
-                            </td>
-                            <td class="shoping__cart__price">
-                                $55.00
-                            </td>
-                            <td class="shoping__cart__quantity">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
+                            @foreach(Cart::content() as $item)
+                                <td class="shoping__cart__item">
+                                    <img src="{{asset('img/product')}}/{{$item->model->image}}" alt="{{$item->model->name}}">
+                                    <h5>{{$item->model->name}}</h5>
+                                </td>
+                                <td class="shoping__cart__price">
+                                    Rs{{$item->model->regular_price}}
+                                </td>
+                                <td class="shoping__cart__quantity">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <input type="text" value="{{$item->model->qty}}">
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="shoping__cart__total">
-                                $110.00
-                            </td>
-                            <td class="shoping__cart__item__close">
-                                <span class="icon_close"></span>
-                            </td>
+                                </td>
+                                <td class="shoping__cart__total">
+                                    Rs{{$item->model->subtotal}}
+                                </td>
+                                <td class="shoping__cart__item__close">
+                                    <span class="icon_close"></span>
+                                </td>
+                            @endforeach
                         </tr>
-                        <tr>
-                            <td class="shoping__cart__item">
-                                <img src="{{asset('img/cart/cart-2.jpg')}}" alt="">
-                                <h5>Fresh Garden Vegetable</h5>
-                            </td>
-                            <td class="shoping__cart__price">
-                                $39.00
-                            </td>
-                            <td class="shoping__cart__quantity">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="shoping__cart__total">
-                                $39.99
-                            </td>
-                            <td class="shoping__cart__item__close">
-                                <span class="icon_close"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="shoping__cart__item">
-                                <img src="{{asset('img/cart/cart-3.jpg')}}" alt="">
-                                <h5>Organic Bananas</h5>
-                            </td>
-                            <td class="shoping__cart__price">
-                                $69.00
-                            </td>
-                            <td class="shoping__cart__quantity">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="shoping__cart__total">
-                                $69.99
-                            </td>
-                            <td class="shoping__cart__item__close">
-                                <span class="icon_close"></span>
-                            </td>
-                        </tr>
+                        @else
+                            <p>No Item in cart</p>
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -179,8 +146,9 @@
                 <div class="shoping__checkout">
                     <h5>Cart Total</h5>
                     <ul>
-                        <li>Subtotal <span>$454.98</span></li>
-                        <li>Total <span>$454.98</span></li>
+                        <li>Subtotal <span>Rs{{Cart::subtotal()}}</span></li>
+                        <li>Tax <span>Rs{{Cart::tax()}}</span></li>
+                        <li>Total <span>Rs{{Cart::total()}}</span></li>
                     </ul>
                     <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
                 </div>
